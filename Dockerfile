@@ -20,11 +20,11 @@ RUN curl -sSL ${DepotDownloader_URL} | bsdtar -xf - ;\
     chmod +x DepotDownloader &&\
     \
     # Base Goldsrc Shared Content
-    ./DepotDownloader -app ${STEAMAPPID} -depot 1    -dir ${STEAMAPPDIR} &&\
+    ./DepotDownloader -app ${STEAMAPPID} -depot 1 -manifest 8474943113327689461     -dir ${STEAMAPPDIR} &&\
     # Linux dedicated server
-    ./DepotDownloader -app ${STEAMAPPID} -depot 4    -dir ${STEAMAPPDIR} &&\
+    ./DepotDownloader -app ${STEAMAPPID} -depot 4 -manifest 8690279432129063737     -dir ${STEAMAPPDIR} &&\
     # Steamworks SDK Redist (LINUX32)
-    ./DepotDownloader -app ${STEAMAPPID} -depot 1006 -dir ${STEAMAPPDIR} &&\
+    ./DepotDownloader -app ${STEAMAPPID} -depot 1006 -manifest 4444585935428744334  -dir ${STEAMAPPDIR} &&\
     # First run crash fix (also STEAM Validation rejected fix)
     echo "70" > ${STEAMAPPDIR}/steam_appid.txt &&\
     # Cleanup
