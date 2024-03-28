@@ -1,0 +1,30 @@
+version: '3'
+
+services:
+  hlds-gameserver:
+    env_file: .env
+    ulimits: # Truncated core dumps fix
+      core:
+        soft: 1073741824 # 1GB
+        hard: 1073741824 # 1GB
+    ports:
+      - $PORT:$PORT/udp
+    expose:
+      - $PORT/udp
+    stdin_open: true
+    tty: true
+    build:
+      context: .
+    entrypoint: "./hlds_run"
+    command: ["\
+        -debug \
+        -game valve \
+        +ip 0.0.0.0 \
+        -port $PORT \
+        +map $MAP \
+        -maxplayers $MAXPLAYERS \
+        +sv_lan $SV_LAN \
+        +rcon_password \"$RCON_PASSWORD\" \
+        +hostname \"$SERVER_NAME\"\
+      "]
+
