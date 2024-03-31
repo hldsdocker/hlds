@@ -16,6 +16,9 @@ docker-compose up
 ```
 
 ## Environment
+
+[![Codacy Badge](https://api.codacy.com/project/badge/Grade/0cd46f12183f40a4a11ecb53d048943e)](https://app.codacy.com/gh/hlds-docker/hlds?utm_source=github.com&utm_medium=referral&utm_content=hlds-docker/hlds&utm_campaign=Badge_Grade)
+
 ```bash
 PORT="27016"
 MAXPLAYERS="10"
