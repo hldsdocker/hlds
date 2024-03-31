@@ -15,7 +15,9 @@ LABEL creator="Sergey Shorokhov <wopox1337@ya.ru>"
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
-       ca-certificates curl libarchive-tools \
+       ca-certificates=20230311 \
+       curl=7.88.1-10+deb12u5 \
+       libarchive-tools=3.6.2-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install DepotDownloader
@@ -25,7 +27,7 @@ RUN curl -L# ${DepotDownloader_URL} | bsdtar -xvf - -C /usr/local/bin/ \
 
 # Download required depots
 ARG DEPOTS="1 4 1006"
-RUN for depot in $(echo ${DEPOTS}); do \
+RUN for depot in ${DEPOTS}; do \
        DepotDownloader -dir ${APPDIR} -app ${APPID} -depot ${depot} -beta ${APPBRANCH}; \
    done \
     && rm -rf ${APPDIR}/.DepotDownloader
@@ -47,7 +49,9 @@ FROM debian:bookworm-slim AS run_stage
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
-       ca-certificates gdb-minimal lib32stdc++6 \
+       ca-certificates=20230311 \
+       gdb-minimal=13.1-3 \
+       lib32stdc++6=12.2.0-14 \
     && rm -rf /var/lib/apt/lists/*
 
 ARG APPDIR
