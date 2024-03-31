@@ -1,0 +1,40 @@
+{
+    "version": "2.0.0",
+    "tasks": [
+        {
+            "label": "Build HLDS Image",
+            "type": "docker-build",
+            "dockerBuild": {
+                "context": "${workspaceFolder}",
+                "buildArgs": {
+                    "APPBRANCH": "${input:betaBranch}"
+                },
+                "tag": "hlds_image"
+            },
+            "group": {
+                "kind": "build",
+                "isDefault": true
+            }
+        },
+        {
+            "type": "shell",
+            "label": "Run HLDS container",
+            "command": "docker run --rm -ti -p 27016:27016/udp hlds_image",
+            "dependsOn": [
+                "Build HLDS Image"
+            ]
+        }
+    ],
+    "inputs": [
+        {
+            "type": "pickString",
+            "id": "betaBranch",
+            "default": "true",
+            "description": "Select DepotsDownloader branch.",
+            "options": [
+                "public",
+                "steam_legacy"
+            ]
+        }
+    ]
+}
