@@ -38,9 +38,9 @@ jobs:
       uses: actions/cache@v4.0.2
       with:
         path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}
+        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ matrix.branch }}
         restore-keys: |
-          ${{ runner.os }}-buildx-
+          ${{ runner.os }}-buildx-${{ matrix.branch }}
 
     - name: Log in to Docker Hub
       if: github.ref == 'refs/heads/master'
