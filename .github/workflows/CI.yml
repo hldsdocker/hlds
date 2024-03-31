@@ -42,12 +42,11 @@ jobs:
         password: ${{ secrets.DOCKER_PASSWORD }}
 
     - name: Build and push Docker image
-      if: github.ref == 'refs/heads/master'
       uses: docker/build-push-action@v5.3.0
       with:
         context: .
         file: ./Dockerfile
         platforms: ${{ env.DOCKER_PLATFORMS }}
-        push: true
+        push: ${{ github.ref == 'refs/heads/master' }}
         tags: ${{ env.DOCKER_IMAGE }}:${{ matrix.branch }}
         build-args: ${{ matrix.build-args }}
