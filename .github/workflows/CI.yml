@@ -3,8 +3,9 @@ name: Docker Image CI
 on:
   push:
     branches: [ master ]
-    paths-ignore: 
-      - "**.md"
+    paths-ignore:
+      - '**.md'
+      - ".vscode/**"
   pull_request:
   workflow_dispatch:
   schedule:
