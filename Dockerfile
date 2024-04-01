@@ -25,9 +25,11 @@ ARG DepotDownloader_URL="https://github.com/SteamRE/DepotDownloader/releases/dow
 RUN curl -L# ${DepotDownloader_URL} | bsdtar -xvf - -C /usr/local/bin/ \
     && chmod +x /usr/local/bin/DepotDownloader
 
-# Download required depots
-ARG DEPOTS="1 4 1006"
-RUN for depot in ${DEPOTS}; do \
+COPY --chmod=755 utils/* utils/
+
+# Download mod depots
+RUN DEPOTS=$(utils/getDepotsByMod.sh ${MOD}) \
+    && for depot in ${DEPOTS}; do \
        DepotDownloader -dir ${APPDIR} -app ${APPID} -depot ${depot} -beta ${APPBRANCH}; \
    done \
     && rm -rf ${APPDIR}/.DepotDownloader

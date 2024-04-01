@@ -21,16 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branch: [steam_legacy, public]
-        mod: [
-          valve,
-          cstrike
-        ]
-        include:
-          - mod: valve
-            depots: "1 4 1006"
-          - mod: cstrike
-            depots: "1 4 1006 11"
+        branch:
+          - steam_legacy
+          - public
+        mod:
+          - valve
+          - cstrike
 
     steps:
     - uses: actions/checkout@v4.1.1
@@ -62,7 +58,6 @@ jobs:
         tags: ${{ env.DOCKER_IMAGE }}:${{ matrix.branch }}
         build-args: |
           APPBRANCH=${{ matrix.branch }}
-          DEPOTS=${{ matrix.depots }}
           MOD=${{ matrix.mod }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
