@@ -36,10 +36,12 @@ jobs:
 
     - name: Cache Docker layers
       uses: actions/cache@v4.0.2
+      env:
+        KEY: ${{ matrix.mod }}-${{ matrix.branch }}
       with:
         path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ matrix.branch }}-${{ matrix.mod }}
-        restore-keys: ${{ runner.os }}-buildx-${{ matrix.branch }}-${{ matrix.mod }}
+        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ env.KEY }}
+        restore-keys: ${{ runner.os }}-buildx-${{ env.KEY }}
 
     - name: Log in to Docker Hub
       if: github.ref == 'refs/heads/master'
