@@ -21,12 +21,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branch: [steam_legacy, latest]
+        branch: [steam_legacy, public]
+        mod: [
+          valve,
+          cstrike
+        ]
         include:
-          - branch: steam_legacy
-            build-args: APPBRANCH=steam_legacy
-          - branch: latest
-            build-args: APPBRANCH=
+          - mod: valve
+            depots: "1 4 1006"
+          - mod: cstrike
+            depots: "1 4 1006 11"
 
     steps:
     - uses: actions/checkout@v4.1.1
@@ -38,9 +42,8 @@ jobs:
       uses: actions/cache@v4.0.2
       with:
         path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ matrix.branch }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-${{ matrix.branch }}
+        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ matrix.branch }}-${{ matrix.mod }}
+        restore-keys: ${{ runner.os }}-buildx-${{ matrix.branch }}-${{ matrix.mod }}
 
     - name: Log in to Docker Hub
       if: github.ref == 'refs/heads/master'
@@ -57,6 +60,9 @@ jobs:
         platforms: ${{ env.DOCKER_PLATFORMS }}
         push: ${{ github.ref == 'refs/heads/master' }}
         tags: ${{ env.DOCKER_IMAGE }}:${{ matrix.branch }}
-        build-args: ${{ matrix.build-args }}
+        build-args: |
+          APPBRANCH=${{ matrix.branch }}
+          DEPOTS=${{ matrix.depots }}
+          MOD=${{ matrix.mod }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
