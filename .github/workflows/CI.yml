@@ -12,7 +12,7 @@ on:
     - cron: '0 0 * * 0'
 
 env:
-  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/hlds
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PLATFORMS: linux/amd64
 
 jobs:
@@ -57,7 +57,7 @@ jobs:
         file: ./Dockerfile
         platforms: ${{ env.DOCKER_PLATFORMS }}
         push: ${{ github.ref == 'refs/heads/master' }}
-        tags: ${{ env.DOCKER_IMAGE }}:${{ matrix.branch }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.mod }}:${{ matrix.branch }}
         build-args: |
           APPBRANCH=${{ matrix.branch }}
           MOD=${{ matrix.mod }}
