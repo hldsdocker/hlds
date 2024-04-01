@@ -7,7 +7,8 @@
             "dockerBuild": {
                 "context": "${workspaceFolder}",
                 "buildArgs": {
-                    "APPBRANCH": "${input:betaBranch}"
+                    "APPBRANCH": "${input:betaBranch}",
+                    "MOD": "${input:mod}",
                 },
                 "tag": "hlds_image"
             },
@@ -29,12 +30,23 @@
         {
             "type": "pickString",
             "id": "betaBranch",
-            "default": "true",
+            "default": "public",
             "description": "Select DepotsDownloader branch.",
             "options": [
                 "public",
                 "steam_legacy"
             ]
-        }
+        },
+        {
+            "type": "pickString",
+            "id": "mod",
+            "default": "valve",
+            "description": "Select mod.",
+            "options": [
+                "valve",
+                "cstrike",
+                "czero"
+            ]
+        },
     ]
 }

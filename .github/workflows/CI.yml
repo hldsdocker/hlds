@@ -12,7 +12,7 @@ on:
     - cron: '0 0 * * 0'
 
 env:
-  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/hlds
+  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}
   DOCKER_PLATFORMS: linux/amd64
 
 jobs:
@@ -21,12 +21,12 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        branch: [steam_legacy, latest]
-        include:
-          - branch: steam_legacy
-            build-args: APPBRANCH=steam_legacy
-          - branch: latest
-            build-args: APPBRANCH=
+        branch:
+          - steam_legacy
+          - public
+        mod:
+          - valve
+          - cstrike
 
     steps:
     - uses: actions/checkout@v4.1.1
@@ -36,11 +36,12 @@ jobs:
 
     - name: Cache Docker layers
       uses: actions/cache@v4.0.2
+      env:
+        KEY: ${{ matrix.mod }}-${{ matrix.branch }}
       with:
         path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ matrix.branch }}
-        restore-keys: |
-          ${{ runner.os }}-buildx-${{ matrix.branch }}
+        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ env.KEY }}
+        restore-keys: ${{ runner.os }}-buildx-${{ env.KEY }}
 
     - name: Log in to Docker Hub
       if: github.ref == 'refs/heads/master'
@@ -56,7 +57,9 @@ jobs:
         file: ./Dockerfile
         platforms: ${{ env.DOCKER_PLATFORMS }}
         push: ${{ github.ref == 'refs/heads/master' }}
-        tags: ${{ env.DOCKER_IMAGE }}:${{ matrix.branch }}
-        build-args: ${{ matrix.build-args }}
+        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.mod }}:${{ matrix.branch }}
+        build-args: |
+          APPBRANCH=${{ matrix.branch }}
+          MOD=${{ matrix.mod }}
         cache-from: type=local,src=/tmp/.buildx-cache
         cache-to: type=local,dest=/tmp/.buildx-cache
