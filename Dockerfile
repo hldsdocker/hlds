@@ -2,7 +2,7 @@ ARG APPDIR="/root/hlds"
 ARG APPID="90"
 ARG MOD="valve"
 
-FROM debian:bookworm-slim AS build_stage
+FROM debian:trixie-slim AS build_stage
 
 ARG APPDIR
 ARG APPID
@@ -13,11 +13,11 @@ LABEL creator="Sergey Shorokhov <wopox1337@ya.ru>"
 
 # Install required packages
 RUN set -x \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests \
-       ca-certificates=20230311 \
-       curl=7.88.1-10+deb12u5 \
-       libarchive-tools=3.6.2-1 \
+    && apt update \
+    && apt install -y --no-install-recommends --no-install-suggests \
+       ca-certificates=20240203 \
+       curl=8.5.0-2 \
+       libarchive-tools=3.7.2-1 \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install DepotDownloader
@@ -45,15 +45,15 @@ RUN rm -rf ${APPDIR}/linux64 \
         -name '*.dylib' \
     \) -exec rm -rf {} \;
 
-FROM debian:bookworm-slim AS run_stage
+FROM debian:trixie-slim AS run_stage
 
 # Install required packages
 RUN set -x \
-    && apt-get update \
-    && apt-get install -y --no-install-recommends --no-install-suggests \
-       ca-certificates=20230311 \
-       gdb-minimal=13.1-3 \
-       lib32stdc++6=12.2.0-14 \
+    && apt update \
+    && apt install -y --no-install-recommends --no-install-suggests \
+       ca-certificates=20240203 \
+       gdb-minimal=13.2-1 \
+       lib32stdc++6=14-20240201-3 \
     && rm -rf /var/lib/apt/lists/*
 
 ARG APPDIR
