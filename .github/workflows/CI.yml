@@ -5,15 +5,12 @@ on:
     branches: [ master ]
     paths-ignore:
       - '**.md'
-      - ".vscode/**"
+      - '.vscode/**'
+      - '.github/workflows/dockerhub-description.yml'
   pull_request:
   workflow_dispatch:
   schedule:
     - cron: '0 0 * * 0'
-
-env:
-  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}
-  DOCKER_PLATFORMS: linux/amd64
 
 jobs:
 
@@ -27,24 +24,15 @@ jobs:
         mod:
           - valve
           - cstrike
+    env:
+      needToPush: ${{ github.ref == 'refs/heads/master' }}
 
     steps:
     - uses: actions/checkout@v4.1.1
-
-    - name: Set up Docker Buildx
-      uses: docker/setup-buildx-action@v3.2.0
-
-    - name: Cache Docker layers
-      uses: actions/cache@v4.0.2
-      env:
-        KEY: ${{ matrix.mod }}-${{ matrix.branch }}
-      with:
-        path: /tmp/.buildx-cache
-        key: ${{ runner.os }}-buildx-${{ github.sha }}-${{ env.KEY }}
-        restore-keys: ${{ runner.os }}-buildx-${{ env.KEY }}
+    - uses: docker/setup-buildx-action@v3.2.0
 
     - name: Log in to Docker Hub
-      if: github.ref == 'refs/heads/master'
+      if: ${{ env.needToPush }}
       uses: docker/login-action@v3.1.0
       with:
         username: ${{ secrets.DOCKER_USERNAME }}
@@ -55,11 +43,12 @@ jobs:
       with:
         context: .
         file: ./Dockerfile
-        platforms: ${{ env.DOCKER_PLATFORMS }}
-        push: ${{ github.ref == 'refs/heads/master' }}
-        tags: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.mod }}:${{ matrix.branch }}
+        platforms: linux/amd64
+        push: ${{ env.needToPush }}
+        tags: |
+          ${{ secrets.DOCKER_USERNAME }}/${{ matrix.mod }}:${{ matrix.branch }}
         build-args: |
           APPBRANCH=${{ matrix.branch }}
           MOD=${{ matrix.mod }}
-        cache-from: type=local,src=/tmp/.buildx-cache
-        cache-to: type=local,dest=/tmp/.buildx-cache
+        cache-from: type=gha
+        cache-to: type=gha,mode=max

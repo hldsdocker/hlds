@@ -5,23 +5,49 @@ on:
   push:
     branches: [ master ]
     paths:
-      - README.md
+      - .github/.teamplate-README.md
       - .github/workflows/dockerhub-description.yml
-
-env:
-  DOCKER_IMAGE: ${{ secrets.DOCKER_USERNAME }}/hlds
 
 jobs:
 
   update_description:
     runs-on: ubuntu-latest
+    continue-on-error: true
+    strategy:
+      matrix:
+        mod:
+          - valve
+          - cstrike
+          - czero
+        include:
+          - mod: valve
+            logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/70/header.jpg"
+          - mod: cstrike
+            logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/10/header.jpg"
+          - mod: czero
+            logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/80/header.jpg"
+    env:
+      TEAMPLATE_PATH: .github/.teamplate-README.md
+
     steps:
       - uses: actions/checkout@v4.1.1
+
+      - name: Modify readme for DockerHub
+        run: |
+          template=$(cat ${{ env.TEAMPLATE_PATH }})
+          template="${template//\$dockerUser/${{ secrets.DOCKER_USERNAME }}}"
+          template="${template//\$dockerRepo/${{ matrix.mod }}}"
+          template="${template//\$githubRepository/${{ github.repository }}}"
+          template="${template//\$logoUrl/${{ matrix.logoUrl }}}"
+          template="${template//\$mod/${{ matrix.mod }}}"
+          echo "$template" > ${{ env.TEAMPLATE_PATH }}
+
 
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v4
         with:
           username: ${{ secrets.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ env.DOCKER_IMAGE }}
-          short-description: ${{ github.event.repository.description }}
+          repository: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.mod }}
+          short-description: ${{ github.event.repository.description }} (${{ matrix.mod }})
+          readme-filepath: ${{ env.TEAMPLATE_PATH }}
