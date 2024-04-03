@@ -54,10 +54,11 @@ A list of possible branches and depots can be found here:
 
 [Read more about branches](https://partner.steamgames.com/doc/store/application/branches) in Steamworks documentation.
 
-## Secrets for GitHub Actions
-| Key | Description |
-| - | - |
-| `DOCKER_USERNAME` | DockerHub user account |
-| `DOCKER_PASSWORD` | DockerHub user password |
+## Secrets and Variables for GitHub Actions
+| Type | Key | Description |
+| - | - | - |
+| Variable  | `DOCKER_USERNAME` | DockerHub user account |
+| Secret    | `DOCKER_PASSWORD` | DockerHub user password |
 
-[Read more about secrets in GitHub Actions](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)
+Read more about [secrets](https://docs.github.com/en/actions/learn-github-actions/variables#using-the-vars-context-to-access-configuration-variable-values) and [variables](https://docs.github.com/en/actions/security-guides/using-secrets-in-github-actions)
+ in GitHub Docs.

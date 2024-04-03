@@ -35,7 +35,7 @@ jobs:
       - name: Modify readme for DockerHub
         run: |
           template=$(cat ${{ env.TEAMPLATE_PATH }})
-          template="${template//\$dockerUser/${{ secrets.DOCKER_USERNAME }}}"
+          template="${template//\$dockerUser/${{ vars.DOCKER_USERNAME }}}"
           template="${template//\$dockerRepo/${{ matrix.mod }}}"
           template="${template//\$githubRepository/${{ github.repository }}}"
           template="${template//\$logoUrl/${{ matrix.logoUrl }}}"
@@ -46,8 +46,8 @@ jobs:
       - name: Docker Hub Description
         uses: peter-evans/dockerhub-description@v4
         with:
-          username: ${{ secrets.DOCKER_USERNAME }}
+          username: ${{ vars.DOCKER_USERNAME }}
           password: ${{ secrets.DOCKER_PASSWORD }}
-          repository: ${{ secrets.DOCKER_USERNAME }}/${{ matrix.mod }}
+          repository: ${{ vars.DOCKER_USERNAME }}/${{ matrix.mod }}
           short-description: ${{ github.event.repository.description }} (${{ matrix.mod }})
           readme-filepath: ${{ env.TEAMPLATE_PATH }}
