@@ -1,11 +1,4 @@
-ARG APPID="90"
-ARG MOD="valve"
-
 FROM debian:trixie-slim AS build_stage
-
-ARG APPID
-ARG MOD
-ARG APPBRANCH=""
 
 LABEL creator="Sergey Shorokhov <wopox1337@ya.ru>"
 
@@ -28,14 +21,31 @@ WORKDIR ${APPDIR}
 
 COPY --chmod=755 utils/* utils/
 
-# Download mod depots
-RUN DEPOTS=$(utils/getDepotsByMod.sh ${MOD}) \
-    && for depot in ${DEPOTS}; do \
+ARG APPID=90
+ARG APPBRANCH="public"
+
+ENV BASE_DEPOTS="1 4 1006"
+
+# Download base depots
+RUN for depot in ${BASE_DEPOTS}; do \
        DepotDownloader -dir ${APPDIR} -app ${APPID} -depot ${depot} -beta ${APPBRANCH}; \
-   done
+    done
+
+SHELL [ "/bin/bash", "-c" ]
+ARG MOD="valve"
+
+# Download mod depots
+RUN MOD_DEPOTS=$(utils/getDepotsByMod.sh ${MOD}) \
+    && MOD_DEPOTS=${MOD_DEPOTS//$BASE_DEPOTS/} && \
+    if [ -n "$MOD_DEPOTS" ]; then \
+        for depot in $MOD_DEPOTS; do \
+            DepotDownloader -dir ${APPDIR} -app ${APPID} -depot ${depot} -beta ${APPBRANCH}; \
+        done; \
+    fi
 
 # Fix first run crash and STEAM Validation rejected issue
-RUN cp ${APPDIR}/${MOD}/steam_appid.txt ${APPDIR}
+RUN cp ${APPDIR}/${MOD}/steam_appid.txt ${APPDIR} \
+    && touch ${APPDIR}/${MOD}/{banned,listip}.cfg
 
 # Remove unnecessary files
 RUN rm -rf linux64 .DepotDownloader utils/ \
@@ -74,10 +84,10 @@ RUN mkdir -p ${HOME}/.steam/sdk32/ \
 
 EXPOSE 26900-27020/udp
 
+WORKDIR /home/${APPUSER}/${APPDIRNAME}
+
 ARG MOD
 ENV MOD=${MOD}
-
-WORKDIR /home/${APPUSER}/${APPDIRNAME}
 
 # Set default command
 CMD ["bash", "-c", "./hlds_run -game ${MOD} +ip 0.0.0.0 -port 27016 +map $(head -n 1 ./${MOD}/mapcycle.txt)"]
