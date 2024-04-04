@@ -13,8 +13,8 @@ LABEL creator="Sergey Shorokhov <wopox1337@ya.ru>"
 
 # Install required packages
 RUN set -x \
-    && apt update \
-    && apt install -y --no-install-recommends --no-install-suggests \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
        ca-certificates=20240203 \
        curl=8.5.0-2 \
        libarchive-tools=3.7.2-1 \
@@ -49,8 +49,8 @@ FROM debian:trixie-slim AS run_stage
 
 # Install required packages
 RUN set -x \
-    && apt update \
-    && apt install -y --no-install-recommends --no-install-suggests \
+    && apt-get update \
+    && apt-get install -y --no-install-recommends --no-install-suggests \
        ca-certificates=20240203 \
        gdb-minimal=13.2-1 \
        lib32stdc++6=14-20240201-3 \
