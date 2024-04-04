@@ -20,7 +20,7 @@ RUN set -x \
 
 # Download and install DepotDownloader
 ARG DepotDownloader_URL="https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.5.0/DepotDownloader-linux-x64.zip"
-RUN curl -L# ${DepotDownloader_URL} | bsdtar -xvf - -C /usr/local/bin/ \
+RUN curl -sSL ${DepotDownloader_URL} | bsdtar -xvf - -C /usr/local/bin/ \
     && chmod +x /usr/local/bin/DepotDownloader
 
 ENV APPDIR=/root/hlds
