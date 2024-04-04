@@ -68,8 +68,10 @@ RUN mkdir -p ~/.steam/sdk32/ \
 
 WORKDIR ${APPDIR}
 
-EXPOSE 27016/udp
+EXPOSE 26900-27020/udp
 
-# Set entrypoint and default command
-ENTRYPOINT ["sh", "-c"]
-CMD ["./hlds_run -game valve -debug +ip 0.0.0.0 -port 27016 -maxplayers 10 +map crossfire"]
+ARG MOD
+ENV MOD=${MOD}
+
+# Set default command
+CMD ["sh", "-c", "./hlds_run -game ${MOD} +ip 0.0.0.0 -port 27016 +map $(head -n 1 ./${MOD}/mapcycle.txt)"]
