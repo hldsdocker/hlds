@@ -24,6 +24,7 @@ jobs:
         mod:
           - valve
           - cstrike
+          - czero
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
 

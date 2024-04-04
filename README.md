@@ -17,6 +17,7 @@ The base image is [Debian](https://hub.docker.com/_/debian).
 | - | - | - | - |
 | HLDS valve | [`public`, `steam_legacy`](https://hub.docker.com/r/hldsdocker/valve/tags) | [![Docker Pulls](https://img.shields.io/docker/pulls/hldsdocker/valve?logo=docker&logoColor=blue)](https://hub.docker.com/r/hldsdocker/valve) | [![Docker Image Size](https://img.shields.io/docker/image-size/hldsdocker/valve?logo=docker&logoColor=blue)](https://hub.docker.com/r/hldsdocker/valve) |
 | HLDS cstrike | [`public`, `steam_legacy`](https://hub.docker.com/r/hldsdocker/cstrike/tags) | [![Docker Pulls](https://img.shields.io/docker/pulls/hldsdocker/cstrike?logo=docker&logoColor=blue)](https://hub.docker.com/r/hldsdocker/cstrike) | [![Docker Image Size](https://img.shields.io/docker/image-size/hldsdocker/cstrike?logo=docker&logoColor=blue)](https://hub.docker.com/r/hldsdocker/cstrike) |
+| HLDS czero | [`public`, `steam_legacy`](https://hub.docker.com/r/hldsdocker/czero/tags) | [![Docker Pulls](https://img.shields.io/docker/pulls/hldsdocker/czero?logo=docker&logoColor=blue)](https://hub.docker.com/r/hldsdocker/czero) | [![Docker Image Size](https://img.shields.io/docker/image-size/hldsdocker/czero?logo=docker&logoColor=blue)](https://hub.docker.com/r/hldsdocker/czero) |
 
 ### Tags
 | Name | Description |
