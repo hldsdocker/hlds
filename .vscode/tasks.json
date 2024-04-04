@@ -8,9 +8,9 @@
                 "context": "${workspaceFolder}",
                 "buildArgs": {
                     "APPBRANCH": "${input:betaBranch}",
-                    "MOD": "${input:mod}",
+                    "MOD": "${input:mod}"
                 },
-                "tag": "hlds_image"
+                "tag": "hlds_image:${input:betaBranch}-${input:mod}"
             },
             "group": {
                 "kind": "build",
@@ -20,7 +20,7 @@
         {
             "type": "shell",
             "label": "Run HLDS container",
-            "command": "docker run --rm -ti -p 27016:27016/udp hlds_image",
+            "command": "docker run --rm -ti -p 26900-27020:26900-27020/udp hlds_image:${input:betaBranch}-${input:mod}",
             "dependsOn": [
                 "Build HLDS Image"
             ]
