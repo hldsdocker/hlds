@@ -29,6 +29,7 @@ jobs:
           - gearbox
           - tfc
           - ricochet
+          - dmc
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
 

@@ -22,6 +22,9 @@ case "$1" in
     "ricochet")
         echo "1 4 1006 61"
         ;;
+    "dmc")
+        echo "1 4 1006 41"
+        ;;
     *)
         echo "Invalid argument \"$1\""
         exit 1
