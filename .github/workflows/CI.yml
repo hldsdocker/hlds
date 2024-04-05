@@ -28,6 +28,7 @@ jobs:
           - dod
           - gearbox
           - tfc
+          - ricochet
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
 

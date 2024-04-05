@@ -19,6 +19,9 @@ case "$1" in
     "tfc")
         echo "1 4 1006 21"
         ;;
+    "ricochet")
+        echo "1 4 1006 61"
+        ;;
     *)
         echo "Invalid argument \"$1\""
         exit 1

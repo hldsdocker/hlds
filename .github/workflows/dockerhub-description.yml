@@ -22,6 +22,7 @@ jobs:
           - dod
           - gearbox
           - tfc
+          - ricochet
         include:
           - mod: valve
             logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/70/header.jpg"
@@ -35,6 +36,8 @@ jobs:
             logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/50/header.jpg"
           - mod: tfc
             logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/20/header.jpg"
+          - mod: ricochet
+            logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/60/header.jpg"
     env:
       TEAMPLATE_PATH: .github/.teamplate-README.md
 
