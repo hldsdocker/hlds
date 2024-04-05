@@ -19,6 +19,8 @@ jobs:
           - valve
           - cstrike
           - czero
+          - dod
+          - gearbox
         include:
           - mod: valve
             logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/70/header.jpg"
@@ -26,6 +28,10 @@ jobs:
             logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/10/header.jpg"
           - mod: czero
             logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/80/header.jpg"
+          - mod: dod
+            logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/30/header.jpg"
+          - mod: gearbox
+            logoUrl: "https://cdn.cloudflare.steamstatic.com/steam/apps/50/header.jpg"
     env:
       TEAMPLATE_PATH: .github/.teamplate-README.md
 

@@ -10,6 +10,12 @@ case "$1" in
     "czero")
         echo "1 4 1006 11 81"
         ;;
+    "dod")
+        echo "1 4 1006 31"
+        ;;
+    "gearbox")
+        echo "1 4 1006 51"
+        ;;
     *)
         echo "Invalid argument \"$1\""
         exit 1

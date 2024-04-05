@@ -25,6 +25,8 @@ jobs:
           - valve
           - cstrike
           - czero
+          - dod
+          - gearbox
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
 
