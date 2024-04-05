@@ -45,7 +45,12 @@
             "options": [
                 "valve",
                 "cstrike",
-                "czero"
+                "czero",
+                "dod",
+                "gearbox",
+                "tfc",
+                "ricochet",
+                "dmc"
             ]
         }
     ]

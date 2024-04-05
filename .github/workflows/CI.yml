@@ -25,6 +25,11 @@ jobs:
           - valve
           - cstrike
           - czero
+          - dod
+          - gearbox
+          - tfc
+          - ricochet
+          - dmc
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
 
