@@ -30,6 +30,18 @@ jobs:
           - tfc
           - ricochet
           - dmc
+        exclude:
+          - mod: dod
+            branch: steam_legacy
+          - mod: gearbox
+            branch: steam_legacy
+          - mod: tfc
+            branch: steam_legacy
+          - mod: ricochet
+            branch: steam_legacy
+          - mod: dmc
+            branch: steam_legacy
+
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
 
@@ -53,6 +65,7 @@ jobs:
         push: ${{ env.needToPush }}
         tags: |
           ${{ vars.DOCKER_USERNAME }}/${{ matrix.mod }}:${{ matrix.branch }}
+          ${{ matrix.branch == 'public' && format('{0}/{1}:latest', vars.DOCKER_USERNAME, matrix.mod) || null}}
         build-args: |
           APPBRANCH=${{ matrix.branch }}
           MOD=${{ matrix.mod }}
