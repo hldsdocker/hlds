@@ -16,6 +16,9 @@ case "$1" in
     "gearbox")
         echo "1 4 1006 51"
         ;;
+    "tfc")
+        echo "1 4 1006 21"
+        ;;
     *)
         echo "Invalid argument \"$1\""
         exit 1

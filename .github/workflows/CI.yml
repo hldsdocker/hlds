@@ -27,6 +27,7 @@ jobs:
           - czero
           - dod
           - gearbox
+          - tfc
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
 
