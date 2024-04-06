@@ -30,17 +30,6 @@ jobs:
           - tfc
           - ricochet
           - dmc
-        exclude:
-          - mod: dod
-            branch: steam_legacy
-          - mod: gearbox
-            branch: steam_legacy
-          - mod: tfc
-            branch: steam_legacy
-          - mod: ricochet
-            branch: steam_legacy
-          - mod: dmc
-            branch: steam_legacy
 
     env:
       needToPush: ${{ github.ref == 'refs/heads/master' }}
