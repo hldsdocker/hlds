@@ -2,7 +2,18 @@ version: '3'
 
 services:
   hlds-gameserver:
+    build:
+      context: .
+      args:
+        MOD: valve
     env_file: .env
+    environment:
+      PORT: 27016
+      MAXPLAYERS: 32
+      MAP: crossfire
+      SERVER_NAME: My great halfLife server!
+      SV_LAN: 0
+      RCON_PASSWORD: ""
     ulimits: # Truncated core dumps fix
       core:
         soft: 1073741824 # 1GB
@@ -13,8 +24,6 @@ services:
       - $PORT/udp
     stdin_open: true
     tty: true
-    build:
-      context: .
     entrypoint: "./hlds_run"
     command: ["\
         -debug \
