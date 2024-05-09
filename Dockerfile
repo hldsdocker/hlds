@@ -1,4 +1,4 @@
-FROM debian:trixie-slim AS build_stage
+FROM debian:12-slim AS build_stage
 
 LABEL creator="Sergey Shorokhov <wopox1337@ya.ru>"
 
@@ -55,7 +55,7 @@ RUN rm -rf linux64 .DepotDownloader utils/ \
         -name '*.dylib' \
     \) -exec rm -rf {} \;
 
-FROM debian:trixie-slim AS run_stage
+FROM debian:12-slim AS run_stage
 
 # Install required packages
 RUN set -x \
