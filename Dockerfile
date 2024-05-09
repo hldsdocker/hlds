@@ -6,9 +6,9 @@ LABEL creator="Sergey Shorokhov <wopox1337@ya.ru>"
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
-       ca-certificates=20240203 \
-       curl=8.5.0-2 \
-       libarchive-tools=3.7.2-1 \
+       ca-certificates \
+       curl \
+       libarchive-tools \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install DepotDownloader
@@ -61,9 +61,9 @@ FROM debian:trixie-slim AS run_stage
 RUN set -x \
     && apt-get update \
     && apt-get install -y --no-install-recommends --no-install-suggests \
-       ca-certificates=20240203 \
-       gdb-minimal=13.2-1 \
-       lib32stdc++6=14-20240201-3 \
+       ca-certificates \
+       gdb-minimal \
+       lib32stdc++6 \
     && rm -rf /var/lib/apt/lists/*
 
 ARG APPUSER="hlds_user"
