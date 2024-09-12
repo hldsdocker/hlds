@@ -1,5 +1,3 @@
-version: '3'
-
 services:
   hlds-gameserver:
     build:
@@ -7,19 +5,12 @@ services:
       args:
         MOD: valve
     env_file: .env
-    environment:
-      PORT: 27016
-      MAXPLAYERS: 32
-      MAP: crossfire
-      SERVER_NAME: My great halfLife server!
-      SV_LAN: 0
-      RCON_PASSWORD: ""
     ulimits: # Truncated core dumps fix
       core:
         soft: 1073741824 # 1GB
         hard: 1073741824 # 1GB
     ports:
-      - $PORT:$PORT/udp
+      - $PORT:27015/udp
     expose:
       - $PORT/udp
     stdin_open: true
@@ -29,7 +20,6 @@ services:
         -debug \
         -game valve \
         +ip 0.0.0.0 \
-        -port $PORT \
         +map $MAP \
         -maxplayers $MAXPLAYERS \
         +sv_lan $SV_LAN \
