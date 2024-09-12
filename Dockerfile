@@ -90,4 +90,4 @@ ARG MOD
 ENV MOD=${MOD}
 
 # Set default command
-CMD ["bash", "-c", "./hlds_run -game ${MOD} +ip 0.0.0.0 -port 27016 +map $(grep -oE '^\\s*(\\w+)' ./${MOD}/mapcycle.txt | head -n 1 | xargs)"]
+CMD ["bash", "-c", "./hlds_run -game ${MOD} +ip 0.0.0.0 +map $(grep -oE '^\\s*(\\w+)' ./${MOD}/mapcycle.txt | head -n 1 | xargs)"]
