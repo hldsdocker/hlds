@@ -12,7 +12,7 @@ RUN set -x \
     && rm -rf /var/lib/apt/lists/*
 
 # Download and install DepotDownloader
-ARG DepotDownloader_URL="https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.7.1/DepotDownloader-linux-x64.zip"
+ARG DepotDownloader_URL="https://github.com/SteamRE/DepotDownloader/releases/download/DepotDownloader_2.7.2/DepotDownloader-linux-x64.zip"
 RUN curl -sSL ${DepotDownloader_URL} | bsdtar -xvf - -C /usr/local/bin/ \
     && chmod +x /usr/local/bin/DepotDownloader
 
